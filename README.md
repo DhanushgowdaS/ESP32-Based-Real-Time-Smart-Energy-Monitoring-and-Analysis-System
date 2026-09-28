@@ -25,7 +25,7 @@ ESP32
    |
    +-- Wi-Fi
          |
-     ESP32 Web Server (port 80)  -> serves the dashboard files from LittleFS
+     ESP32 Web Server (port 80)  -> serves the dashboard stored in the firmware
          |
      WebSocket (port 81)
          |
@@ -58,7 +58,7 @@ See [docs/wiring.md](docs/wiring.md) for details and safety notes.
 - WebSockets (Markus Sattler)
 - PZEM004Tv30
 - LiquidCrystal I2C
-- Built in with the ESP32 core: WiFi, WebServer, Wire, LittleFS, Preferences
+- Built in with the ESP32 core: WiFi, WebServer, Wire, Preferences
 - Dashboard: HTML, CSS, JavaScript, Chart.js 3.9.1 (loaded from a CDN)
 
 ## Repository Structure
@@ -68,11 +68,14 @@ esp32-smart-energy-monitor/
 ├── README.md
 ├── ESP32/
 │   └── Smart_Energy_Monitor/
-│       └── Smart_Energy_Monitor.ino
+│       ├── Smart_Energy_Monitor.ino
+│       └── dashboard.h
 ├── Dashboard/
 │   ├── index.html
 │   ├── style.css
 │   └── script.js
+├── tools/
+│   └── generate_dashboard_header.py
 └── docs/
     ├── wiring.md
     └── circuit-diagram.png   (to be added)
@@ -83,18 +86,22 @@ The sketch sits in a folder with the same name as the `.ino` file, as the Arduin
 ## Setup
 
 1. Install the libraries listed above.
-2. Open `Smart_Energy_Monitor.ino` and set your Wi-Fi details:
+2. Open `ESP32/Smart_Energy_Monitor/Smart_Energy_Monitor.ino` in the Arduino IDE. It opens with two tabs: the sketch and `dashboard.h`.
+3. Set your Wi-Fi details in the sketch:
    ```cpp
    const char* ssid = "YOUR_WIFI_SSID";
    const char* password = "YOUR_WIFI_PASSWORD";
    ```
    Never commit real credentials.
-3. Copy `index.html`, `style.css` and `script.js` from `Dashboard/` into a `data` folder next to the sketch:
-   `ESP32/Smart_Energy_Monitor/data/`
-4. Upload the `data` folder to the ESP32 with a LittleFS upload tool (for example the arduino-littlefs-upload plugin for Arduino IDE 2.x).
-5. Upload the sketch.
-6. Open the Serial Monitor (115200 baud) or read the IP address from the LCD.
-7. Open `http://<ESP32_IP>` in a browser on the same network. The trend graphs need the browser to reach the internet, because Chart.js is loaded from a CDN.
+4. Select your ESP32 board and port, then press Upload.
+5. Open the Serial Monitor (115200 baud) or read the IP address from the LCD.
+6. Open `http://<ESP32_IP>` in a browser on the same network. The trend graphs need the browser to reach the internet, because Chart.js is loaded from a CDN.
+
+`dashboard.h` contains the dashboard and is generated from the `Dashboard/` folder. After editing `index.html`, `style.css` or `script.js`, run `python tools/generate_dashboard_header.py` and upload the sketch again.
+
+## Preview Without Hardware
+
+Open `Dashboard/index.html?demo` in a browser (Chrome or Edge). The dashboard runs on simulated readings, and the threshold settings and status indicator work too. The trend graphs need an internet connection for Chart.js.
 
 ## Data Interface
 
@@ -150,4 +157,6 @@ The threshold status is an on-screen indicator only. No relay is connected or co
 - Energy bill estimation
 - OTA firmware updates
 
+## Credits
 
+The ESP32 data acquisition firmware is adapted from the open-source ESP32 Smart Energy Meter example by Yarana IoT Guru (https://github.com/YaranaIotGuru). The dashboard interface in this repository is a new design.

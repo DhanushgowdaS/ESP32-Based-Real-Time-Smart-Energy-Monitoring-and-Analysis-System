@@ -1,0 +1,4 @@
+# Local credentials / editor files
+secrets.h
+.vscode/
+.DS_Store
