@@ -150,6 +150,4 @@ The threshold status is an on-screen indicator only. No relay is connected or co
 - Energy bill estimation
 - OTA firmware updates
 
-## Credits
 
-The ESP32 data acquisition firmware is adapted from the open-source ESP32 Smart Energy Meter example by Yarana IoT Guru (https://github.com/YaranaIotGuru). The dashboard interface in this repository is a new design.
