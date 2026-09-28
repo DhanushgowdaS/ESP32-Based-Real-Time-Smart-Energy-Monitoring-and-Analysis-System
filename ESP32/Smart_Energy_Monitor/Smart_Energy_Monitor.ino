@@ -19,8 +19,8 @@ PZEM004Tv30 pzem(Serial2, PZEM_RX_PIN, PZEM_TX_PIN);
 unsigned long bootTime = 0;
 
 // Wi-Fi Credentials (replace before uploading, never commit real values)
-const char* ssid = "Admin";
-const char* password = "passwoed";
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
 
 // Servers
 WebServer server(80);
