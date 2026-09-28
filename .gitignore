@@ -1,7 +1,0 @@
-# Copy of Dashboard/ used only for the LittleFS upload
-ESP32/Smart_Energy_Monitor/data/
-
-# Local credentials / editor files
-secrets.h
-.vscode/
-.DS_Store
